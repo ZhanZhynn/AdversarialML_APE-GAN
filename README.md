@@ -8,7 +8,7 @@ Implementation APE-GAN (https://arxiv.org/pdf/1707.05474.pdf)
 
 ### 1. Train CNN and Generate Adversarial Examples(FGSM)
 ```
-python generate.py --eps 0.15
+python generate.py --eps 0.15 ./checkpoint/mnist
 ```
 
 ### 2. Train APE-GAN
