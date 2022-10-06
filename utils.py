@@ -25,7 +25,9 @@ def noise_attack(model, x, t, loss_func, eps, min=0, max=1):
     model.zero_grad()
     loss.backward(retain_graph=True)
     
-    return Variable(x*torch.rand_like(x) * eps) #noise attack
+    return Variable(torch.clamp(x*torch.rand_like(x) * eps, min=min, max=max))
+
+    # return Variable(x*torch.rand_like(x) * eps) #noise attack
 
 
 def accuracy(y, t):
