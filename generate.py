@@ -16,7 +16,7 @@ from torchvision import transforms
 from tqdm import tqdm
 
 from models import MnistCNN, CifarCNN
-from utils import accuracy, fgsm
+from utils import accuracy, fgsm, noise_attack
 
 from PIL import Image
 import matplotlib.image as mpimg
@@ -61,6 +61,7 @@ def load_cnn(args):
 def main(args):
     check_path = args.checkpoint
     os.makedirs(check_path, exist_ok=True)
+    attacktype = args.attack
 
     print(check_path)
 
@@ -155,7 +156,11 @@ def main(args):
         y = model(x)
         train_acc += accuracy(y, t)
 
-        x_adv = fgsm(model, x, t, loss_func, eps)
+        if attacktype == "fgsm": #FGSM attack
+          x_adv = fgsm(model, x, t, loss_func, eps)
+        else: #noise attack
+          x_adv = noise_attack(model, x, t, loss_func, eps)
+
         y_adv = model(x_adv)
         adv_acc += accuracy(y_adv, t)
         train_n += t.size(0)
@@ -183,6 +188,7 @@ if __name__ == "__main__":
     parser.add_argument("--gamma", type=float, default=0.1)
     parser.add_argument("--eps", type=float, default=0.15)
     parser.add_argument("--checkpoint", type=str, default="./checkpoint/test")
+    parser.add_argument("--attack", type=str, default="fgsm")
 
     args = parser.parse_args()
     main(args)
