@@ -13,8 +13,7 @@ from torchvision import transforms
 from tqdm import tqdm
 
 from models import MnistCNN, CifarCNN, Generator
-from utils import fgsm, accuracy
-
+from utils import fgsm, accuracy, noise_attack
 
 def load_dataset(args):
     if args.data == "mnist":
@@ -40,6 +39,8 @@ def load_cnn(args):
 
 
 def main(args):
+    attacktype = args.attack #noise_attack or fgsm
+
     eps = args.eps
     test_loader = load_dataset(args)
 
@@ -65,7 +66,12 @@ def main(args):
         y = model(x)
         normal_acc += accuracy(y, t)
 
-        x_adv = fgsm(model, x, t, loss_cre, eps)
+        if attacktype == "fgsm": #FGSM attack
+          x_adv = fgsm(model, x, t, loss_cre, eps)
+        else: #noise_attack
+          x_adv = noise_attack(model, x, t, loss_cre, eps)
+
+        # x_adv = fgsm(model, x, t, loss_cre, eps)
         y_adv = model(x_adv)
         adv_acc += accuracy(y_adv, t)
 
@@ -84,5 +90,7 @@ if __name__ == "__main__":
     parser.add_argument("--data", type=str, default="mnist")
     parser.add_argument("--eps", type=float, default=0.15)
     parser.add_argument("--gan_path", type=str, default="./checkpoint/test/3.tar")
+    parser.add_argument("--attack", type=str, default="fgsm") #either fgsm or noise_attack
+
     args = parser.parse_args()
     main(args)
