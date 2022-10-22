@@ -68,8 +68,12 @@ def main(args):
 
         if attacktype == "fgsm": #FGSM attack
           x_adv = fgsm(model, x, t, loss_cre, eps)
-        else: #noise_attack
+        elif attacktype == 'noise_attack': #noise_attack
           x_adv = noise_attack(model, x, t, loss_cre, eps)
+        else: #si_ni_fgsm attack
+          x_adv = si_ni_fgsm(model, x, t, loss_cre, eps)
+
+            
 
         # x_adv = fgsm(model, x, t, loss_cre, eps)
         y_adv = model(x_adv)
@@ -90,7 +94,7 @@ if __name__ == "__main__":
     parser.add_argument("--data", type=str, default="mnist")
     parser.add_argument("--eps", type=float, default=0.15)
     parser.add_argument("--gan_path", type=str, default="./checkpoint/test/3.tar")
-    parser.add_argument("--attack", type=str, default="fgsm") #either fgsm or noise_attack
+    parser.add_argument("--attack", type=str, default="fgsm") #either fgsm, noise_attack or si_ni_fgsm
 
     args = parser.parse_args()
     main(args)
