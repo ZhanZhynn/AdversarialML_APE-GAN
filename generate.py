@@ -158,8 +158,11 @@ def main(args):
 
         if attacktype == "fgsm": #FGSM attack
           x_adv = fgsm(model, x, t, loss_func, eps)
-        else: #noise attack
+        elif attacktype == "noise_attack": #noise attack
           x_adv = noise_attack(model, x, t, loss_func, eps)
+        else:
+          x_adv = si_ni_fgsm(model, x, t, loss_func, eps)
+
 
         y_adv = model(x_adv)
         adv_acc += accuracy(y_adv, t)
@@ -188,7 +191,7 @@ if __name__ == "__main__":
     parser.add_argument("--gamma", type=float, default=0.1)
     parser.add_argument("--eps", type=float, default=0.15)
     parser.add_argument("--checkpoint", type=str, default="./checkpoint/test")
-    parser.add_argument("--attack", type=str, default="fgsm")
+    parser.add_argument("--attack", type=str, default="fgsm") #either fgsm, noise_attack or si_ni_fgsm
 
     args = parser.parse_args()
     main(args)
