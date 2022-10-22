@@ -13,7 +13,7 @@ from torchvision import transforms
 from tqdm import tqdm
 
 from models import MnistCNN, CifarCNN, Generator
-from utils import fgsm, accuracy, noise_attack
+from utils import fgsm, accuracy, noise_attack, si_ni_fgsm
 
 def load_dataset(args):
     if args.data == "mnist":
