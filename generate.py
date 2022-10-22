@@ -147,7 +147,7 @@ def main(args):
     
     # Generate Adversarial Examples
     print("-" * 30)
-    print("Genrating Adversarial Examples ...")
+    print("Generating Adversarial Examples ...")
     eps = args.eps
     train_acc, adv_acc, train_n = 0, 0, 0
     normal_data, adv_data = None, None
