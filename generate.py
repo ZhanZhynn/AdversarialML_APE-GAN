@@ -16,7 +16,7 @@ from torchvision import transforms
 from tqdm import tqdm
 
 from models import MnistCNN, CifarCNN
-from utils import accuracy, fgsm, noise_attack
+from utils import accuracy, fgsm, noise_attack, si_ni_fgsm
 
 from PIL import Image
 import matplotlib.image as mpimg
