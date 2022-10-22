@@ -83,10 +83,15 @@ def main(args):
         y_ape = model(x_ape)
         ape_acc += accuracy(y_ape, t)
         n += t.size(0)
-    print("Accuracy: normal {:.6f}, fgsm {:.6f}, ape {:.6f}".format(
-        normal_acc / n * 100,
-        adv_acc / n * 100,
+    print("Accuracy: normal {:.6f}, {} {:.6f}, ape {:.6f}".format(
+        normal_acc / n * 100, 
+        attacktype, adv_acc / n * 100, 
         ape_acc / n * 100))
+    
+#     print("Accuracy: normal {:.6f}, fgsm {:.6f}, ape {:.6f}".format(
+#         normal_acc / n * 100,
+#         adv_acc / n * 100,
+#         ape_acc / n * 100))
 
 
 if __name__ == "__main__":
