@@ -2,6 +2,7 @@
 
 import torch
 from torch.autograd import Variable
+import torchattacks
 
 
 def fgsm(model, x, t, loss_func, eps, min=0, max=1):
