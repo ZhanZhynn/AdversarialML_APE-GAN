@@ -175,7 +175,7 @@ def main(args):
             normal_data = torch.cat((normal_data, x))
             adv_data = torch.cat((adv_data, x_adv))
 
-    print("Accuracy(normal) {:.6f}, Accuracy(FGSM) {:.6f}".format(train_acc / train_n * 100, adv_acc / train_n * 100))
+    print("Accuracy(normal): {:.6f}, Accuracy({}): {:.6f}".format(train_acc / train_n * 100, attacktype, adv_acc / train_n * 100))
     torch.save({"normal": normal_data, "adv": adv_data}, "data.tar")
     torch.save({"state_dict": model.state_dict()}, "cnn.tar")
 
