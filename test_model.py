@@ -10,6 +10,9 @@ from torch.autograd import Variable
 from torchvision import datasets
 from torchvision import transforms
 
+import PIL
+from PIL import Image
+
 from tqdm import tqdm
 
 from models import MnistCNN, CifarCNN, Generator
@@ -92,6 +95,14 @@ def main(args):
 #         normal_acc / n * 100,
 #         adv_acc / n * 100,
 #         ape_acc / n * 100))
+    if args.adv_path != None:
+        img = Image.open(args.adv_path)
+        convert_tensor = transforms.Compose([transforms.ToTensor()])
+        x_adv = convert_tensor(img).cuda()
+        x_ape = G(x_adv.unsqueeze(0))
+        y_ape = model(x_adv)
+        _, pred = torch.max(y_ape, 1)
+        print("predicted label: " + str(pred.item()))
 
 
 if __name__ == "__main__":
@@ -100,6 +111,7 @@ if __name__ == "__main__":
     parser.add_argument("--eps", type=float, default=0.15)
     parser.add_argument("--gan_path", type=str, default="./checkpoint/test/3.tar")
     parser.add_argument("--attack", type=str, default="fgsm") #either fgsm, noise_attack or si_ni_fgsm
+    parser.add_argument("--adv_path", type=str, default=None) #define addversarial image path
 
     args = parser.parse_args()
     main(args)
