@@ -2,7 +2,7 @@
 https://colab.research.google.com/drive/1F_drQCAzPNj49HfQAZfNCo4F07DrMmdE?usp=sharing
 
 # APE-GAN
-Adversarial Perturbation Elimination with GAN
+Adversarial Perturbation Elimination with GAN <br>
 My Implementation of APE-GAN with reference to the research paper (https://arxiv.org/pdf/1707.05474.pdf)
 
 ## MNIST
